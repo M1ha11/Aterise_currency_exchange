@@ -1,0 +1,25 @@
+.title {
+  color: #37D151;
+}
+
+.inputTitle {
+  color: #37D151;
+}
+
+.btn_btn-success {
+  margin-bottom: 100px;
+}
+
+.footer {
+  width: 100%;
+  bottom: 0;
+  position: absolute;
+}
+
+.res {
+  color: #37D151;
+}
+
+div#but {
+  margin-top: 45px;
+}
