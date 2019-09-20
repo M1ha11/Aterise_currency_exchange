@@ -15,6 +15,7 @@ class ApplicationController < Sinatra::Base
   get '/' do
     @currencies = Currency.all
     @result = params[:result]
+    @title = params[:title]
     erb :index
   end
 
@@ -24,7 +25,7 @@ class ApplicationController < Sinatra::Base
       @result = params[:amount] if params[:from] == params[:to]
       convert_number = get_rate(params[:from], params[:to], params[:date])
       @result = calculate(params[:amount], params[:to], convert_number)
-      redirect "/?result=#{@result}"
+      redirect "/?result=#{@result}&title=#{params[:to]}"
     end
   end
 
@@ -61,6 +62,7 @@ class ApplicationController < Sinatra::Base
         'Wrong Date'
       else
         money = amount.to_f * convert_number
+        money.round(2)
       end
     end
   end

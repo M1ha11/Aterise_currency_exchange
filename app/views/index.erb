@@ -62,7 +62,7 @@
         <% if !@result.nil? && @result.to_f == 0.0 %>
           <%= flash[:alert] = 'Wrong Input' %>
         <% elsif !@result.nil? && @result.to_f != 0.0 %>
-          <h1 class="res">Result = <%= @result %></h1>
+          <h1 class="res">Result = <%= @result %> <%= @title %></h1>
         <% end %>
       </div>
     </div>
