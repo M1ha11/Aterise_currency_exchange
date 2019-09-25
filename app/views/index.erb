@@ -7,7 +7,7 @@
             <div class="col-sm-10">
               <h2 class="inputTitle">Amount:</h2>
               <div class="input-group">
-                <input type="number" name="amount" class="form-control">
+                <input type="number" name="amount" class="form-control" value=<%= params[:amount]%>>
               </div>
             </div>
           </div>
@@ -15,9 +15,13 @@
             <div class="col-sm-12">
               <h2 class="inputTitle">From:</h2>
               <div class="form-group">
-                <select class="form-control" id="fromSelect" name="from">
+                <select class="form-control" id="fromSelect" name="from" >
                   <% @currencies.each do |currency| %>
-                    <option><%= currency.title %></option>
+                    <% if params[:from] == currency.title%>
+                      <option selected><%= currency.title%></option>
+                    <% else %>
+                       <option><%= currency.title %></option>
+                    <% end %>
                   <% end %> 
                 </select>
               </div>
@@ -27,9 +31,13 @@
             <div class="col-sm-12">
               <h2 class="inputTitle">To:</h2>
               <div class="form-group">
-                <select class="form-control" id="toSelect" name="to">
+                <select class="form-control" id="toSelect" name="to" >
                   <% @currencies.each do |currency| %>
-                    <option><%= currency.title %></option>
+                    <% if params[:to] == currency.title%>
+                      <option selected><%= currency.title%></option>
+                    <% else %>
+                       <option><%= currency.title %></option>
+                    <% end %>
                   <% end %> 
                 </select>
               </div>
@@ -39,7 +47,7 @@
             <div class="col-sm-10">
               <h2 class="inputTitle">Date:</h2>
               <div class="input-group">
-                <input id="datepicker" name="date" class="form-control">
+                <input id="datepicker" name="date" class="form-control" value=<%= params[:date] %>>
                 <script>
                   $('#datepicker').datepicker({
                     format: 'yyyy-mm-dd',
@@ -60,9 +68,9 @@
     <div class="row">
       <div class="columns align-item-center">
         <% if !@result.nil? && @result.to_f == 0.0 %>
-          <%= flash[:alert] = 'Wrong Input' %>
+          <%= flash[:alert] = @result %>
         <% elsif !@result.nil? && @result.to_f != 0.0 %>
-          <h1 class="res">Result = <%= @result %> <%= @title %></h1>
+          <h1 class="res">Result = <%= @result %> <%= params[:to] %></h1>
         <% end %>
       </div>
     </div>

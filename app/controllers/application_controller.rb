@@ -14,19 +14,23 @@ class ApplicationController < Sinatra::Base
 
   get '/' do
     @currencies = Currency.all
-    @result = params[:result]
-    @title = params[:title]
     erb :index
   end
 
   post '/' do
-    if params[:amount]
+    @currencies = Currency.all
+    unless params[:amount].empty?
       check_date(params[:date])
-      @result = params[:amount] if params[:from] == params[:to]
-      convert_number = get_rate(params[:from], params[:to], params[:date])
+      if params[:from] == params[:to]
+        @result = params[:amount]
+        return erb :index
+      end
+      convert_number = get_rate(params[:from], params[:to], params[:date]) unless @result == 'Wrong Date'
       @result = calculate(params[:amount], params[:to], convert_number)
-      redirect "/?result=#{@result}&title=#{params[:to]}"
+    else
+      @result = 'Wrong Input' 
     end
+    erb :index
   end
 
   helpers do
@@ -48,17 +52,13 @@ class ApplicationController < Sinatra::Base
     def check_date(date)
       unless date.empty?
         if Date.parse(date) > Date.today
-          @result = 'Wrong date'
-          redirect "/?result=#{@result}"
+          @result = 'Wrong Date'
         end
       end
     end
 
-    def get_result
-    end
-
     def calculate(amount, to, convert_number)
-      if convert_number.nil? || convert_number == 'Wrong Input'
+      if convert_number.nil? || convert_number == 'Wrong Input' || convert_number == 'Wrong Date'
         'Wrong Date'
       else
         money = amount.to_f * convert_number
