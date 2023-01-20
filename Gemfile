@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'activerecord', '~> 5.2.3'
+gem 'activerecord', '~> 6.1.7'
 gem 'bootstrap-sass', '~> 3.4', '>= 3.4.1'
 gem 'httparty'
 gem 'pry'
